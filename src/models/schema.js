@@ -14,10 +14,5 @@ const model = new Schema({
     password: String
 });
 
-// const altModel = new Schema({
-//     name: String,
-//     alt: String
-// })
-
 module.exports = mongoose.model('Model', model);
 // module.exports = mongoose.model('Alt', altModel);
