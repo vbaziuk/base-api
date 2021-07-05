@@ -1,8 +1,9 @@
 var Dataschema = require('../models/schema');
 var Altschema = require('../models/logins');
 
+
 /**
- * list entries - GET
+ * GET - list entries
  */
 exports.list = (request, h) => {
     return Dataschema.find({}).exec().then((lol) => {
@@ -44,6 +45,47 @@ exports.create = (request, h) => {
         return { err: err };
     })
 }
+
+/**
+ * DELETE an entry
+ */
+exports.remove = (request, h) => {
+    return Dataschema.findById(request.params.id).exec().then((lol) => {
+        if (!lol) return { err: 'entry not found'};
+        lol.remove();
+    }).then((data) => {
+        return { message: "entry deleted successfully" };
+    }).catch((err) => {
+        return { err: err };
+    })
+}
+
+/**
+ * PATCH an entry
+ */
+exports.update = (request, h) => {
+    return Dataschema.findById(request.params.id).exec().then((lol) => {
+        if (!lol) return { err: 'Entry not found' };
+        // console.log(JSON.stringify(lol, null, 2));   // left for your testing pleasure
+        lol.name = request.payload.name;
+        lol.email = request.payload.email;
+        lol.password = request.payload.password;
+        lol.save();
+    }).then((data) => {
+        return { message: "Entry was updated successfully" };
+    }).catch((err) => {
+        console.log(err)
+        return { err: err };
+    })
+}
+
+
+/**
+ * 
+ * Alternate Routes to experiment with alternate json object models. 
+ * 
+ */
+
 
 // *** alternate post ***
 exports.altPost = (request, h) => {
@@ -87,38 +129,5 @@ exports.altRemove = (request, h) => {
     }).catch((err) => {
         // console.log("error was caught")
         return { err: "entry not found" };
-    })
-}
-
-/**
- * DELETE an entry
- */
-exports.remove = (request, h) => {
-    return Dataschema.findById(request.params.id).exec().then((lol) => {
-        if (!lol) return { err: 'entry not found'};
-        lol.remove();
-    }).then((data) => {
-        return { message: "entry deleted successfully" };
-    }).catch((err) => {
-        return { err: err };
-    })
-}
-
-/**
- * PATCH an entry
- */
-exports.update = (request, h) => {
-    return Dataschema.findById(request.params.id).exec().then((lol) => {
-        if (!lol) return { err: 'Entry not found' };
-        // console.log(JSON.stringify(lol, null, 2));   // left for your testing pleasure
-        lol.name = request.payload.name;
-        lol.email = request.payload.email;
-        lol.password = request.payload.password;
-        lol.save();
-    }).then((data) => {
-        return { message: "Entry was updated successfully" };
-    }).catch((err) => {
-        console.log(err)
-        return { err: err };
     })
 }
