@@ -1,5 +1,5 @@
 var Dataschema = require('../models/schema');
-// var Altschema = require('../models/alt');
+var Altschema = require('../models/logins');
 
 /**
  * list entries - GET
@@ -45,13 +45,15 @@ exports.create = (request, h) => {
     })
 }
 
-// *** alt post ***
+// *** alternate post ***
 exports.altPost = (request, h) => {
     console.log("msg: altPost")
     const entryData = {
-        name: request.payload.name,
-        email: request.payload.email,
-        password: request.payload.password
+        account: request.payload.account,
+        login: {
+            user: request.payload.login.email,
+            pass: request.payload.login.password
+        }
     }
     console.log(entryData);
     return Altschema.create(entryData).then((lol) => {
@@ -108,13 +110,15 @@ exports.remove = (request, h) => {
 exports.update = (request, h) => {
     return Dataschema.findById(request.params.id).exec().then((lol) => {
         if (!lol) return { err: 'Entry not found' };
+        // console.log(JSON.stringify(lol, null, 2));   // left for your testing pleasure
         lol.name = request.payload.name;
         lol.email = request.payload.email;
         lol.password = request.payload.password;
-        lol.save(entryData);
+        lol.save();
     }).then((data) => {
         return { message: "Entry was updated successfully" };
     }).catch((err) => {
+        console.log(err)
         return { err: err };
     })
 }

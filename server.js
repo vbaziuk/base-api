@@ -47,20 +47,20 @@ const init = async () => {
     });
 
     /**
-     * Alternate Experimental Routes
+     * Alternate Experimental Routes - just for fun
      */
 
     // alt post
     server.route({
         method: ['PUT', 'POST'],
-        path: "/alternateData",
+        path: "/logins/",
         handler: dataController.altPost
     });
 
     // alt get
     server.route({
         method: ['GET'],
-        path: "/alternateData",
+        path: "/logins/",
         handler: dataController.altList
     });
 
