@@ -6,9 +6,12 @@ var Altschema = require('../models/logins');
  * GET - list entries
  */
 exports.list = (request, h) => {
+    console.log("GET")
     return Dataschema.find({}).exec().then((lol) => {
+        console.log(lol)
         return { accounts: lol };
     }).catch((err) => {
+        console.log(err);
         return { err: err };
     });
 }
@@ -76,58 +79,5 @@ exports.update = (request, h) => {
     }).catch((err) => {
         console.log(err)
         return { err: err };
-    })
-}
-
-
-/**
- * 
- * Alternate Routes to experiment with alternate json object models. 
- * 
- */
-
-
-// *** alternate post ***
-exports.altPost = (request, h) => {
-    console.log("msg: altPost")
-    const entryData = {
-        account: request.payload.account,
-        login: {
-            user: request.payload.login.email,
-            pass: request.payload.login.password
-        }
-    }
-    console.log(entryData);
-    return Altschema.create(entryData).then((lol) => {
-        return { message: "Entry created successfully!", postBody: lol };
-    }).catch((err) => {
-        return { err: err };
-    })
-}
-
-// *** alt list ***
-exports.altList = (request, h) => {
-    console.log("msg: altList")
-    return Altschema.find({}).exec().then((lol) => {
-        return { accounts: lol };
-    }).catch((err) => {
-        return { err: err };
-    });
-}
-
-// *** alt delete ***
-exports.altRemove = (request, h) => {
-    return Altschema.findById(request.params.id).exec().then((lol) => {
-        // console.log("lol msg: ", lol);
-        // console.log("null bool status: ", !lol);
-        // if (!lol) return { err: "entry not found"};      // this doesn't trigger err to be caught. this 'passes' tho it shouldn't
-        if (lol === null) return err;
-        lol.remove();
-    }).then((data) => {
-        // console.log("data: ", data);
-        return { message: "entry deleted successfully" };
-    }).catch((err) => {
-        // console.log("error was caught")
-        return { err: "entry not found" };
     })
 }

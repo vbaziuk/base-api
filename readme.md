@@ -15,6 +15,9 @@ when forming the body to test in postman, use 'Body > raw'. Using form-data spit
 }
 ```
 
+### **Fix List**:
+1. Clear up unreferenced variables in controller.js
+
 ### **Future potential features to be implemented**
 **Password Generation**: A random password generator to create easier to remember passwords when you're drawing a blank. This will generate a secure password using upper and lowercase characters, a number, a special character to ensure password strength.
 

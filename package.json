@@ -12,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^20.1.4",
+    "hapi-auth-jwt2": "^8.0.0",
+    "jwks-rsa": "^2.0.3",
     "mongoose": "^5.12.15"
   }
 }
