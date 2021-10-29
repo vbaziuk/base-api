@@ -1,8 +1,4 @@
 .vscode/
-
 !.vscode/settings.json
-
 /data
 /node_modules
-
-package-lock.json
