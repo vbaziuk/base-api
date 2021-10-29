@@ -1,23 +1,19 @@
 var Dataschema = require('../models/schema');
-var Altschema = require('../models/logins');
 
 
 /**
  * GET - list entries
  */
 exports.list = (request, h) => {
-    console.log("GET")
     return Dataschema.find({}).exec().then((lol) => {
-        console.log(lol)
         return { accounts: lol };
     }).catch((err) => {
-        console.log(err);
         return { err: err };
     });
 }
 
 /**
- * GET by id
+ * GET - by id
  */
 exports.get = (request, h) => {
     return Dataschema.findById(request.params.id).exec().then((lol) => {
@@ -40,7 +36,6 @@ exports.create = (request, h) => {
         email: request.payload.email,
         password: request.payload.password
     }
-    // console.log(entryData);
 
     return Dataschema.create(entryData).then((lol) => {
         return { message: "Entry created successfully!", postBody: lol };
@@ -54,7 +49,7 @@ exports.create = (request, h) => {
  */
 exports.remove = (request, h) => {
     return Dataschema.findById(request.params.id).exec().then((lol) => {
-        if (!lol) return { err: 'entry not found'};
+        if (!lol) return { err: 'entry not found' };
         lol.remove();
     }).then((data) => {
         return { message: "entry deleted successfully" };
